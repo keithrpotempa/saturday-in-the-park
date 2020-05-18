@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import SaturdayInThePark from './components/SaturdayInThePark';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SaturdayInThePark />
   </React.StrictMode>,
   document.getElementById('root')
 );
