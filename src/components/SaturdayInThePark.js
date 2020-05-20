@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import ApplicationViews from "./ApplicationViews";
+import NavBar from "./nav/NavBar"
 
-const SaturdayInThePark = () => {
+const SaturdayInThePark = props => {
+  const isAuthenticated = () => sessionStorage.getItem("credentials") !== null;
+
+  const [hasUser, setHasUser] = useState(isAuthenticated())
+  
+  const setUser = user => {
+    sessionStorage.setItem("credentials", JSON.stringify(user));
+    setHasUser(isAuthenticated());
+  }
 
   return (
     <>
       <div className="App Site">
         <div className="Site-content">
           <div className="App-header">
-            {/* NAVBAR HERE */}
+            <NavBar 
+              hasUser={hasUser}
+              {...props}
+            />
           </div>
           <div className="main">
-            <h1>SATURDAY IN THE PARK</h1>
-            <ApplicationViews />
+            <ApplicationViews
+               hasUser={hasUser}
+               setUser={setUser}
+               {...props}
+            />
           </div>
         </div>
       </div>
