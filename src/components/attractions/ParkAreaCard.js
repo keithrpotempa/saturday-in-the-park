@@ -10,7 +10,9 @@ const ParkAreasList = props => {
       <p>Theme: {park.theme}</p>
       <ul>
       {attractions.map(attraction => 
-        <li>{attraction.name}</li>
+        <li key={`attraction-${attraction.id}`}>
+          {attraction.name}
+        </li>
       )}
       </ul>
     </>

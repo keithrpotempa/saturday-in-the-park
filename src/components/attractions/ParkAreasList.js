@@ -7,7 +7,7 @@ const ParkAreasList = props => {
   const [attractions, setAttractions] = useState([])
 
   const getParkAreas = () => {
-    return ApiManager.getAll("areas")
+    return ApiManager.getAll("parkareas")
       .then(setParkAreas)
   }
 

@@ -1,4 +1,4 @@
-const url = "http://localhost:5002"
+const url = "http://localhost:8000"
 
 export default {
   getAll(datatype) {
