@@ -22,6 +22,15 @@ const NavBar = () => {
                 Home
               </NavLink>
             </li>
+            <li>
+              <NavLink 
+                className="nav-link" 
+                activeClassName="active"
+                exact to="/myitinerary"
+              >
+                My Itinerary
+              </NavLink>
+            </li>
             {/* Make login/register an if/then */}
             <li>
               <NavLink 

@@ -5,6 +5,10 @@ export default {
     return fetch(`${url}/${datatype}`)
       .then(result => result.json())
   },
+  getItinerary(customer_id) {
+    return fetch(`${url}/itineraries?customer=${customer_id}`)
+      .then(result => result.json())
+  },
   post(datatype, dataToPost) {
     return fetch(`${url}/${datatype}/`, {
       method: "POST",
