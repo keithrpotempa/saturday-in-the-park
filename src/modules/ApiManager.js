@@ -5,9 +5,24 @@ export default {
     return fetch(`${url}/${datatype}`)
       .then(result => result.json())
   },
-  getItinerary(customer_id) {
-    return fetch(`${url}/itineraries?customer=${customer_id}`)
+  getItinerary() {
+    return fetch(`${url}/itineraries`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${sessionStorage.getItem("kennywood_token")}`
+      }
+    })
       .then(result => result.json())
+  },
+  postItinerary(dataToPost) {
+    return fetch(`${url}/itineraries`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${sessionStorage.getItem("kennywood_token")}`
+      },
+      body: JSON.stringify(dataToPost)
+    }).then(result => result.json());
   },
   post(datatype, dataToPost) {
     return fetch(`${url}/${datatype}/`, {

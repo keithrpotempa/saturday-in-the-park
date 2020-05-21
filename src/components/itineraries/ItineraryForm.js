@@ -26,12 +26,11 @@ const ItineraryForm = props => {
 
     // FIXME: Customer id should auto fill based on who is logged in
     const itinerary_item = {
-      start_time: formData.startTime, 
-      attraction_id: formData.attractionId,
-      customer_id: 1
+      "starttime": formData.startTime, 
+      "attraction_id": formData.attractionId,
     }
 
-    ApiManager.post("itineraries", itinerary_item)
+    ApiManager.postItinerary(itinerary_item)
       .then(props.history.push("/myitinerary"))
   }
 

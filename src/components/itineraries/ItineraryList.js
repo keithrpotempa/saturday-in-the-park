@@ -9,6 +9,7 @@ const ItineraryList = props => {
   const [parkAreas, setParkAreas] = useState([])
   const [attractions, setAttractions] = useState([])
   const [itinerary, setItinerary] = useState([])
+  const [userid, setUserId] = useState(null)
 
   const getParkAreas = () => {
     return ApiManager.getAll("parkareas")
@@ -21,19 +22,37 @@ const ItineraryList = props => {
   }
 
   const getItinerary = () => {
-    return ApiManager.getAll("interary")
-      .then(setItinerary)
+    return ApiManager.getItinerary(userid)
+    .then(rsp => {
+      setItinerary(rsp)
+      console.log(rsp)
+    })
+  }
+
+  const getUserId = () => {
+    setUserId(sessionStorage.getItem("kennywood_user_id"))
   }
 
   useEffect(() => {
+    getUserId();
     getParkAreas();
     getAttractions();
-  }, [])
+    if (userid !== null) {
+      getItinerary();
+    }
+  }, [userid])
 
   return (
     <>
       <h3>MY ITINERARY</h3>
       <a href="/myitinerary/new">Add to Itinerary</a>
+      <ul>
+        {itinerary.map(activity => 
+          <li>  
+            {activity.attraction.name} at {activity.starttime}
+          </li>
+        )}
+      </ul>
     </>
   )
 }
