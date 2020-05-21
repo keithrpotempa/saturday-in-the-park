@@ -18,16 +18,29 @@ const ApplicationViews = props => {
           {...props}
         />
       }}/>
-      <Route exact path="/myitinerary" render={props => {
-        return <ItineraryList
-          {...props}
-        />
+      <Route exact path="/myitinerary"
+        render={props => {
+          if (hasUser) {
+            return <ItineraryList {...props} />;
+          } else {
+            return <Redirect to="/login" />;
+          }
       }}/>
       <Route exact path="/myitinerary/new" render={props => {
         return <ItineraryForm
           {...props}
         />
       }}/>
+      <Route
+        path="/myitinerary/:itineraryId(\d+)/edit"
+        render={props => {
+          if (hasUser) {
+            return <ItineraryForm {...props} />;
+          } else {
+            return <Redirect to="/login" />;
+          }
+        }}
+      />
       <Route exact path="/login" render={props => {
         return <Login
           setUser={setUser}

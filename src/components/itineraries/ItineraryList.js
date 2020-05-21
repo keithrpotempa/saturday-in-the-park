@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ApiManager from "../../modules/ApiManager"
 
-// TODO: FINISH THIS -- it is only half-coded
-// Big question: how do you get the user id of the logged in user?
-// Is it stored in session storage when they login/register?
-// Is it retrieved, adhoc, using their token?
 const ItineraryList = props => {
+  // In case parkareas or attractions are needed
   const [parkAreas, setParkAreas] = useState([])
   const [attractions, setAttractions] = useState([])
   const [itinerary, setItinerary] = useState([])
@@ -23,10 +20,7 @@ const ItineraryList = props => {
 
   const getItinerary = () => {
     return ApiManager.getItinerary(userid)
-    .then(rsp => {
-      setItinerary(rsp)
-      console.log(rsp)
-    })
+      .then(setItinerary)
   }
 
   const getUserId = () => {

@@ -11,8 +11,15 @@ export default {
         "Content-Type": "application/json",
         "Authorization": `Token ${sessionStorage.getItem("kennywood_token")}`
       }
-    })
-      .then(result => result.json())
+    }).then(result => result.json())
+  },
+  getItineraryItem(id) {
+    return fetch(`${url}/itineraries/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${sessionStorage.getItem("kennywood_token")}`
+      }
+    }).then(result => result.json())
   },
   postItinerary(dataToPost) {
     return fetch(`${url}/itineraries`, {
@@ -29,6 +36,16 @@ export default {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dataToPost)
+    }).then(result => result.json());
+  },
+  putItinerary(dataToPost) {
+    return fetch(`${url}/itineraries/${dataToPost.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${sessionStorage.getItem("kennywood_token")}`
       },
       body: JSON.stringify(dataToPost)
     }).then(result => result.json());

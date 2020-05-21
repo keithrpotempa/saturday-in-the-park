@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ApiManager from "../../modules/ApiManager"
 
 const ItineraryForm = props => {
-  const [attractions, setAttractions] = useState([])  
+  const [attractions, setAttractions] = useState([])  ;
   const [formData, setFormData] = useState(
     { 
       startTime: "", 
@@ -15,27 +15,61 @@ const ItineraryForm = props => {
       .then(setAttractions)
   }
 
+  const getItineraryItem = itineraryId => {
+    console.log("itineraryId", itineraryId)
+    ApiManager.getItineraryItem(itineraryId)
+      .then(resp => {
+        console.log(resp)
+        setFormData(
+          {
+            startTime: resp.starttime, 
+            attractionId: resp.attraction_id
+          }
+        )
+      })
+
+  }
+
   const handleFieldChange = (evt) => {
     const stateToChange = { ...formData };
     stateToChange[evt.target.id] = evt.target.value;
     setFormData(stateToChange);
   };
 
+  const constructItineraryItem = () => {
+    const itineraryItem = {
+      starttime: parseInt(formData.startTime), 
+      attraction_id: parseInt(formData.attractionId),
+    }
+
+    if (props.match.params.itineraryId) {
+      itineraryItem.id = parseInt(props.match.params.itineraryId);
+    }
+
+    return itineraryItem
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // FIXME: Customer id should auto fill based on who is logged in
-    const itinerary_item = {
-      "starttime": formData.startTime, 
-      "attraction_id": formData.attractionId,
+    const itineraryItem = constructItineraryItem(); 
+    console.log(itineraryItem)
+    if (itineraryItem.hasOwnProperty('id')) {
+      ApiManager.putItinerary(itineraryItem)
+        .then(() => props.history.push("/myitinerary"))
+    } else {
+      ApiManager.postItinerary(itineraryItem)
+        .then(() => props.history.push("/myitinerary"))
     }
-
-    ApiManager.postItinerary(itinerary_item)
-      .then(props.history.push("/myitinerary"))
   }
 
   useEffect(() => {
     getAttractions();
+    // If this is an edit, 
+    // we need to get the entry-to-edit's details
+    if (props.match.params.itineraryId) {
+      getItineraryItem(props.match.params.itineraryId)
+    }
   }, [])
 
   return (
@@ -51,7 +85,10 @@ const ItineraryForm = props => {
               type="number"
               id="startTime"
               placeholder="Start Time"
-              required="" autoFocus="" />
+              required="" 
+              autoFocus=""
+              value={formData.startTime} 
+            />
           </div>
           
           <div>
@@ -60,6 +97,7 @@ const ItineraryForm = props => {
               onChange={handleFieldChange} 
               id="attractionId"
               placeholder="Attraction"
+              value={formData.attractionId}
               required="" 
             >
               {attractions.map(attraction => (
