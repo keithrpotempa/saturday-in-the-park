@@ -34,7 +34,7 @@ const Register = props => {
     ApiManager.post("register", user)
       .then(resp => {
         if("token" in resp) {
-          sessionStorage.setItem("kennywood-token", resp.token)
+          props.setUser(resp)
         }
         props.history.push("/");
       })

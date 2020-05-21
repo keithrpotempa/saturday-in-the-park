@@ -21,7 +21,7 @@ const Login = props => {
     ApiManager.post("login", user)
       .then(resp => {
         if("token" in resp) {
-          sessionStorage.setItem("kennywood-token", resp.token)
+          props.setUser(resp)
         }
         props.history.push("/");
       })

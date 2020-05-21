@@ -3,15 +3,21 @@ import ApplicationViews from "./ApplicationViews";
 import NavBar from "./nav/NavBar"
 
 const SaturdayInThePark = props => {
-  const isAuthenticated = () => sessionStorage.getItem("credentials") !== null;
+  const isAuthenticated = () => sessionStorage.getItem("kennywood_token") !== null;
 
   const [hasUser, setHasUser] = useState(isAuthenticated())
-  
-  const setUser = user => {
-    sessionStorage.setItem("credentials", JSON.stringify(user));
+
+  const setUser = resp => {
+    sessionStorage.setItem("kennywood_token", resp.token)
+    sessionStorage.setItem("kennywood_user_id", resp.user_id) 
+    setHasUser(isAuthenticated());
+  } 
+
+  const clearUser = () => {
+    sessionStorage.clear();
     setHasUser(isAuthenticated());
   }
-
+  
   return (
     <>
       <div className="App Site">
@@ -19,6 +25,7 @@ const SaturdayInThePark = props => {
           <div className="App-header">
             <NavBar 
               hasUser={hasUser}
+              clearUser={clearUser}
               {...props}
             />
           </div>

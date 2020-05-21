@@ -7,6 +7,9 @@ import Login from "./user/Login";
 import Register from "./user/Register";
 
 const ApplicationViews = props => {
+  const hasUser = props.hasUser;
+  const setUser = props.setUser;
+
   return (
     <>
       <h1>SATURDAY IN THE PARK</h1>
@@ -27,11 +30,13 @@ const ApplicationViews = props => {
       }}/>
       <Route exact path="/login" render={props => {
         return <Login
+          setUser={setUser}
           {...props}
         />
       }}/>
       <Route exact path="/register" render={props => {
         return <Register
+          setUser={setUser}
           {...props}
         />
       }}/>
